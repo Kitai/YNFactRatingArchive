@@ -48,9 +48,11 @@ var items = GetItemsFrom(data, null, {
         function(row){ return "Exp"+row.Block+row.Cond; },
         "DynamicQuestion", {
             
-            legend: function(row){ return 
-                $("<p>").html(["<b>Block</b>_"+row.Block, "<b>Cond</b>_"+row.Cond, "<b>Item</b>_"+row.Item, "<b>Group</b>_"+row.Group, 
-                "<b>Question</b>_"+row.Question, "<b>Answer</b>_"+row.YesNoAnswer].join('+')).css("display","debugDisplay"); },
+            legend: function(row){
+                return $("<p>").html(
+                                    ["<b>Block</b>_"+row.Block, "<b>Cond</b>_"+row.Cond, "<b>Item</b>_"+row.Item, "<b>Group</b>_"+row.Group, 
+                                     "<b>Question</b>_"+row.Question, "<b>Answer</b>_"+row.YesNoAnswer].join('+')
+                                    ).css("display",debugDisplay); },
             q: function(row){ return "<p style='font-weight: bold;'> - "+row.Question+"</p>"; },
             a: function(row){ return "<p style='font-style: italic; margin-bottom: 1em;'> - "+row.YesNoAnswer+"</p>"; },
             
