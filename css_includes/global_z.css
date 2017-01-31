@@ -1,0 +1,14 @@
+#CompUnnatural:before {
+  content: "Completely unnatural";
+  padding-right: 1em;
+}
+
+#CompNatural:after {
+  content: " Completely natural";
+  padding-left: 1em;
+}
+
+p {
+  max-width: 50em;
+  margin: auto;
+}
