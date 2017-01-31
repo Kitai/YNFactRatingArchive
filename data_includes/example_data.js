@@ -1,4 +1,22 @@
-var shuffleSequence = seq("instructions", "practice",rshuffle(startsWith("Exp1")),rshuffle(startsWith("Exp2")), "post-exp");
+///////////////////////////////////////////////////
+// Hack for retreiving parameters from the URL
+//
+var Parameters = {},
+    URLParameters = window.location.search.replace("?", "").split("&");
+
+for (parameter in URLParameters) Parameters[URLParameters[parameter].split("=")[0]] = URLParameters[parameter].split("=")[1];
+
+var shuffleSequence;
+var debugDisplay = "none";
+
+// Pay attention to case for "Order"
+if (Parameters.Debug == "true") debugDisplay = "block";
+if (Parameters.Home == "true") shuffleSequence = seq("Homepage");
+//
+///////////////////////////////////////////////////
+
+else
+    shuffleSequence = seq("instructions", "practice",rshuffle(startsWith("Exp1")),rshuffle(startsWith("Exp2")), "post-exp");
 var practiceItemTypes = ["practice"];
 var manualSendResults = true;
 var showProgressBar = false;
@@ -30,12 +48,15 @@ var items = GetItemsFrom(data, null, {
         function(row){ return "Exp"+row.Block+row.Cond; },
         "DynamicQuestion", {
             
-            legend: function(row){ return [row.Block, row.Cond, row.Item, row.Group, row.Question, row.YesNoAnswer].join('+'); },
+            legend: function(row){ return 
+                $("<p>").html(["<b>Block</b>_"+row.Block, "<b>Cond</b>_"+row.Cond, "<b>Item</b>_"+row.Item, "<b>Group</b>_"+row.Group, 
+                "<b>Question</b>_"+row.Question, "<b>Answer</b>_"+row.YesNoAnswer].join('+')).css("display","debugDisplay"); },
             q: function(row){ return "<p style='font-weight: bold;'> - "+row.Question+"</p>"; },
             a: function(row){ return "<p style='font-style: italic; margin-bottom: 1em;'> - "+row.YesNoAnswer+"</p>"; },
             
             sequence: [
                 
+                {this: "legend"}
                 {this: "q"},
                 {pause: "key ", tempMessage: "Press Space", newRT: true},
                 {this: "a"},
@@ -52,6 +73,8 @@ var items = GetItemsFrom(data, null, {
 }).concat(
     
   [
+
+    ["Homepage", "Message", {html: {include: "Choice.html"}, transfer: null}],  
       
     ["instructions",
      "Form", {
